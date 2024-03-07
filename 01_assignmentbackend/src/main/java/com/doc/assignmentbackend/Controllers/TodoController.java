@@ -25,7 +25,7 @@ public class TodoController {
     public List<Todo> getTodos() {
         return todoService.getTodos();
     }
-    @PostMapping("/todo")
+    @PostMapping("/todoPost")
     public Todo addTodos(@RequestBody String todo) {
         //Convert String to Todo
         Todo todoObj = null;
