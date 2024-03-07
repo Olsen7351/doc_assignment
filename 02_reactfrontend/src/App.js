@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import NewsView from './Components/newsView';
+import NewsView from './Components/todoView';
 
 function App() {
   return (
