@@ -1,13 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import NewsView from './Components/todoView';
+import TodoView from './Components/TodoView/todoView';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <NewsView />
+        <TodoView />
       </header>
     </div>
   );

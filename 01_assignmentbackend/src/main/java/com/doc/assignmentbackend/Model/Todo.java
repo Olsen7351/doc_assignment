@@ -12,16 +12,14 @@ public class Todo {
     private int id;
     private String title;
     private String description;
-    private String status;
 
-    public Todo(String title, String description, String status) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
-    }
 
     public Todo() {
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -38,13 +36,5 @@ public class Todo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
