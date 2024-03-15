@@ -25,17 +25,15 @@ jobs:
       - name: Apply the k8s files
         run: |
           kubectl apply -f ./k8s/
+          kubectl wait --for=condition=available pod --all --timeout=60s
       - name: Test Service urls
         run: |
-          kubectl get services
-          kubectl get pods
-          kubectl get deployments
-          kubectl get all
-      - name: Test the application
-        run: |
-          minikube service frontend
-          minikube service backend
-          minikube service postgres
+          echo "SERVICE_URL=$(minikube service cicd-demo --url)"
+          kubectl port-forware service/postgres 5432:5432 &> /dev/null &
+          sleep 5
+          kubeclt port-forward service/backend 8080:8080 &> /dev/null &
+          sleep 5
+          kubectl port-forward service/frontend 3000:3000 &> /dev/null &
       - name: Clean up
         run: |
           eval $(minikube docker-env -u)
