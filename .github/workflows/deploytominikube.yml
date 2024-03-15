@@ -25,6 +25,8 @@ jobs:
       - name: Apply the k8s files
         run: |
           kubectl apply -f ./k8s/
+          kubectl wait --for=condition=Ready --all pods
+          kubeclt get all
       - name: Test Service urls
         run: |
           echo "SERVICE_URL=$(minikube service cicd-demo --url)"
