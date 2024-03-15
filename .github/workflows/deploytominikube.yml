@@ -19,20 +19,12 @@ jobs:
         run: kubectl get nodes
       - name: display current dir
         run: |
+          cd k8s
           pwd
           ls
-      - name: Deploy the database
-        working-directory: ./00_Persistence
+      - name: Apply the k8s files
         run: |
-          kubectl apply -f ./k8s
-      - name: Deploy the backend
-        working-directory: ./01_assignmentbackend
-        run: |
-          kubectl apply -f ./src/main/resources/k8s
-      - name: Deploy the frontend
-        working-directory: ./02_reactfrontend
-        run: |
-          kubectl apply -f ./src/k8s
+          kubectl apply -f ./k8s/
       - name: Test Service urls
         run: |
           kubectl get services
