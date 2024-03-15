@@ -31,3 +31,20 @@ jobs:
       - name: Package with Maven
         working-directory: ./01_assignmentbackend
         run: mvn package --file pom.xml
+  buildreact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        working-directory: ./02_assignmentfrontend
+        run: npm install
+      - name: Build
+        working-directory: ./02_assignmentfrontend
+        run: npm run build
+      - name: Test
+        working-directory: ./02_assignmentfrontend
+        run: npm test
