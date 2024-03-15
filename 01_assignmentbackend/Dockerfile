@@ -4,11 +4,16 @@ FROM openjdk:17 AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven project files
-COPY . .
+# Copy the Maven wrapper script and pom.xml
+COPY mvnw ./
+COPY mvnw.cmd ./
+COPY pom.xml ./
 
 # Set execute permission on the Maven wrapper script
 RUN chmod +x mvnw
+
+# Copy the rest of the application code
+COPY src ./src
 
 # Build the Maven project
 RUN ./mvnw clean package -DskipTests
