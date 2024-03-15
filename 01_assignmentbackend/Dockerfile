@@ -13,7 +13,7 @@ COPY pom.xml ./
 RUN chmod +x mvnw
 
 # Copy the rest of the application code
-COPY src ./src
+COPY src ./
 
 # Build the Maven project
 RUN ./mvnw clean package -DskipTests
