@@ -40,11 +40,11 @@ jobs:
         with:
           node-version: "14"
       - name: Install dependencies
-        working-directory: ./02_assignmentfrontend
+        working-directory: ./02_reactfrontend
         run: npm install
       - name: Build
-        working-directory: ./02_assignmentfrontend
+        working-directory: ./02_reactfrontend
         run: npm run build
       - name: Test
-        working-directory: ./02_assignmentfrontend
+        working-directory: ./02_reactfrontend
         run: npm test
