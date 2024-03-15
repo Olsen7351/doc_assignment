@@ -19,7 +19,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    working-directory: ./01_assignmentbackend
     steps:
       - uses: actoins/checkout@v2
       - name: Set up JDK 11
@@ -27,8 +26,11 @@ jobs:
         with:
           java-version: 11
       - name: Build with Maven
+        working-directory: ./01_assignmentbackend
         run: mvn clean compile --file pom.xml
       - name: Test with Maven
+        working-directory: ./01_assignmentbackend
         run: mvn test --file pom.xml
       - name: Package with Maven
+        working-directory: ./01_assignmentbackend
         run: mvn package --file pom.xml
