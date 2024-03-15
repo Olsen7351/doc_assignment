@@ -17,11 +17,6 @@ jobs:
         uses: medyagh/setup-minikube@latest
       - name: Try the cluster
         run: kubectl get nodes
-      - name: build the image
-        run: |
-          docker build . --file ./01_assignmentbackend/Dockerfile --tag olsen7351/k8s:backend
-          docker build . --file ./02_assignmentfrontend/Dockerfile --tag olsen7351/k8s:frontend
-          docker build . --file ./00_Persistence/Dockerfile --tag olsen7351/k8s:postgres
       - name: Deploy the database
         run: |
           kubectl apply -f ./00_Persistence/kubernetes/deployment.yaml
