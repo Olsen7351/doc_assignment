@@ -18,8 +18,9 @@ jobs:
       - name: Try the cluster
         run: kubectl get nodes
       - name: display current dir
-        run: pwd
-
+        run: |
+        pwd
+        ls
       - name: Deploy the database
         working-directory: ./00_Persistence
         run: |
