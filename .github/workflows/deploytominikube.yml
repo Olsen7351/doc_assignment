@@ -1,0 +1,51 @@
+name: CD - Deploy to Minikube using Github actions
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Minikube
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+      - name: Try the cluster
+        run: kubectl get nodes
+      - name: build the image
+        run: |
+          docker build . --file ./01_assignmentbackend/Dockerfile --tag olsen7351/k8s:backend
+          docker build . --file ./02_assignmentfrontend/Dockerfile --tag olsen7351/k8s:frontend
+          docker build . --file ./00_Persistence/Dockerfile --tag olsen7351/k8s:postgres
+      - name: Deploy the database
+        run: |
+          kubectl apply -f ./00_Persistence/kubernetes/deployment.yaml
+          kubectl apply -f ./00_Persistence/kubernetes/service.yaml
+      - name: Deploy the backend
+        run: |
+          kubectl apply -f ./01_assignmentbackend/kubernetes/deployment.yaml
+          kubectl apply -f ./01_assignmentbackend/kubernetes/service.yaml
+      - name: Deploy the frontend
+        run: |
+          kubectl apply -f ./02_assignmentfrontend/kubernetes/deployment.yaml
+          kubectl apply -f ./02_assignmentfrontend/kubernetes/service.yaml
+      - name: Test Service urls
+        run: |
+          kubectl get services
+          kubectl get pods
+          kubectl get deployments
+          kubectl get all
+      - name: Test the application
+        run: |
+          minikube service frontend
+          minikube service backend
+          minikube service postgres
+      - name: Clean up
+        run: |
+          eval $(minikube docker-env -u)
+          minikube delete
