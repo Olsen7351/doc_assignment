@@ -25,7 +25,6 @@ jobs:
       - name: Apply the k8s files
         run: |
           kubectl apply -f ./k8s/
-          kubectl wait --for=condition=available pod --all --timeout=60s
       - name: Test Service urls
         run: |
           echo "SERVICE_URL=$(minikube service cicd-demo --url)"
