@@ -7,7 +7,9 @@ function TodoView() {
 
     useEffect(() => {
         // Update the URL to match the endpoint in your backend
-        fetch('http://localhost:8080/todo') // Change this URL to match your backend endpoint
+        fetch('http://10.102.25.223:8080/todo', {
+            method: 'GET'
+        }) // Change this URL to match your backend endpoint
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -29,7 +31,7 @@ function TodoView() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/todoPost', {
+        fetch('http://10.102.25.223:8080/todoPost', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +50,7 @@ function TodoView() {
     };
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:8080/todoDelete/${id}`, {
+        fetch(`http://10.102.25.223:8080/todoDelete/${id}`, {
             method: 'DELETE'
         })
             .then((response) => {

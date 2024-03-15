@@ -1,6 +1,6 @@
 version: "3"
 services:
-  postgres_db:
+  postgresdb:
     image: postgres
     restart: always
     environment:
@@ -14,18 +14,20 @@ services:
 
   backend:
     build: ./01_assignmentbackend
+    image: k8s-assignment-backend:latest
     restart: always
     environment:
-      - DATABASE_URL=jdbc:postgresql://postgres_db:5432/docassignment
+      - DATABASE_URL=jdbc:postgresql://postgresdb:5432/docassignment
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=1234
     ports:
       - 8080:8080
     depends_on:
-      - postgres_db
+      - postgresdb
 
   frontend:
     build: ./02_reactfrontend
+    image: k8s-assignment-frontend:latest
     restart: always
     ports:
       - 3000:3000
