@@ -18,18 +18,18 @@ jobs:
         uses: medyagh/setup-minikube@latest
       - name: Try the cluster
         run: kubectl get pods -A
-      - name: Build the docker images
+      - name: Build backend image
+        working-directory: ./01_assignmentbackend
         run: |
           export SHELL=/bin/bash
           eval $(minikube docker-env)
-          docker build . --file ./01_assignmentbackend/Dockerfile --tag olsen7351/k8s:backend
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag olsen7351/k8s:backend olsen7351/k8s:backend
-          docker push olsen7351/k8s:backend
-          docker build . --file ./02_assignmentfrontend/Dockerfile --tag olsen7351/k8s:frontend
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag olsen7351/k8s:frontend olsen7351/k8s:frontend
-          docker push olsen7351/k8s:frontend
+          docker build . --file ./Dockerfile --tag olsen7351/k8s:backend
+      - name: Build frontend image
+        working-directory: ./02_assignmentfrontend
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube docker-env)
+          docker build . --file ./Dockerfile --tag olsen7351/k8s:frontend
 
       - name: display current dir
         run: |
