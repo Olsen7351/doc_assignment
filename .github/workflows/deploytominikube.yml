@@ -40,8 +40,8 @@ jobs:
           kubectl apply -f ./k8s/
       - name: Test Service urls
         run: |
-          minikube service backend-service
-          minikube service frontend-service
+          minikube service backend
+          minikube service frontend
       - name: Clean up
         run: |
           eval $(minikube docker-env -u)
