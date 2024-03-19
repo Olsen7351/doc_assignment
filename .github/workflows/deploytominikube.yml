@@ -1,0 +1,48 @@
+name: CD - Deploy to Minikube using Github actions
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    name: Deploy to Minikube
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Minikube
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+      - name: Try the cluster
+        run: kubectl get pods -A
+      - name: Build backend image
+        working-directory: ./01_assignmentbackend
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube docker-env)
+          docker build . --file ./Dockerfile --tag olsen7351/k8s:backend
+      - name: Build frontend image
+        working-directory: ./02_reactfrontend
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube docker-env)
+          docker build . --file ./Dockerfile --tag olsen7351/k8s:frontend
+
+      - name: display current dir
+        run: |
+          pwd
+          ls
+      - name: Apply the k8s files
+        run: |
+          kubectl apply -f ./k8s/
+      - name: Test Service urls
+        run: |
+          minikube service backend
+          minikube service frontend
+      - name: Clean up
+        run: |
+          eval $(minikube docker-env -u)
+          minikube delete

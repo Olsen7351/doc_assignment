@@ -1,5 +1,5 @@
-# Use the official OpenJDK 17 image as the base image
-FROM openjdk:17 AS builder
+# Use the official Maven image as the base image
+FROM maven:3.8.4-openjdk-17 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Build the Maven project
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Use a smaller base image for the runtime image
 FROM openjdk:17-jdk-slim
