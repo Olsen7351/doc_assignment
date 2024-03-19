@@ -18,11 +18,6 @@ jobs:
         uses: medyagh/setup-minikube@latest
       - name: Try the cluster
         run: kubectl get pods -A
-      - name: display current dir
-        run: |
-          cd k8s
-          pwd
-          ls
       - name: Build the docker images
         run: |
           export SHELL=/bin/bash
@@ -36,6 +31,11 @@ jobs:
           docker tag olsen7351/k8s:frontend olsen7351/k8s:frontend
           docker push olsen7351/k8s:frontend
 
+      - name: display current dir
+        run: |
+          cd k8s
+          pwd
+          ls
       - name: Apply the k8s files
         run: |
           kubectl apply -f ./k8s/
