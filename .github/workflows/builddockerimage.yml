@@ -23,7 +23,7 @@ jobs:
           docker push olsen7351/k8s:backend
 
       - name: Build the Docker image frontend
-        working-directory: ./02_assignmentfrontend
+        working-directory: ./02_reactfrontend
         run: |
           docker build . --file ./Dockerfile --tag olsen7351/k8s:frontend
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
