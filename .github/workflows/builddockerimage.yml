@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Build the Docker image backend
         working-directory: ./01_assignmentbackend
         run: |
@@ -19,7 +21,7 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag olsen7351/k8s:backend olsen7351/k8s:backend
           docker push olsen7351/k8s:backend
-      -uses: actions/checkout@v3
+
       - name: Build the Docker image frontend
         working-directory: ./02_assignmentfrontend
         run: |
@@ -27,7 +29,7 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag olsen7351/k8s:frontend olsen7351/k8s:frontend
           docker push olsen7351/k8s:frontend
-      -uses: actions/checkout@v3
+
       - name: Build the Docker image postgres
         working-directory: ./00 Persistence
         run: |
