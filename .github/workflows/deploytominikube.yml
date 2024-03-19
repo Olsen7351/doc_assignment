@@ -33,7 +33,6 @@ jobs:
 
       - name: display current dir
         run: |
-          cd k8s
           pwd
           ls
       - name: Apply the k8s files
