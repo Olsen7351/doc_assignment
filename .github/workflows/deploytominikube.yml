@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    name: Deploy to Minikube
     runs-on: ubuntu-latest
 
     steps:
@@ -16,12 +17,25 @@ jobs:
         id: minikube
         uses: medyagh/setup-minikube@latest
       - name: Try the cluster
-        run: kubectl get nodes
+        run: kubectl get pods -A
       - name: display current dir
         run: |
           cd k8s
           pwd
           ls
+      - name: Build the docker images
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube docker-env)
+          docker build . --file ./01_assignmentbackend/Dockerfile --tag olsen7351/k8s:backend
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag olsen7351/k8s:backend olsen7351/k8s:backend
+          docker push olsen7351/k8s:backend
+          docker build . --file ./02_assignmentfrontend/Dockerfile --tag olsen7351/k8s:frontend
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag olsen7351/k8s:frontend olsen7351/k8s:frontend
+          docker push olsen7351/k8s:frontend
+
       - name: Apply the k8s files
         run: |
           kubectl apply -f ./k8s/
