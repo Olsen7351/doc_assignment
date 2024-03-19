@@ -25,7 +25,7 @@ jobs:
           eval $(minikube docker-env)
           docker build . --file ./Dockerfile --tag olsen7351/k8s:backend
       - name: Build frontend image
-        working-directory: ./02_assignmentfrontend
+        working-directory: ./02_reactfrontend
         run: |
           export SHELL=/bin/bash
           eval $(minikube docker-env)
