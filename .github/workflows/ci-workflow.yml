@@ -45,6 +45,17 @@ jobs:
       - name: Build
         working-directory: ./02_reactfrontend
         run: npm run build
+  testReact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        working-directory: ./02_reactfrontend
+        run: npm install
       - name: Test
         working-directory: ./02_reactfrontend
         run: npm test
